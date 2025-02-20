@@ -1,4 +1,4 @@
-use mcp_types::v2024_11_05::*;
+use mcp_types::*;
 use serde_json::{json, Value};
 use std::fs;
 
@@ -692,7 +692,7 @@ fn test_ping_request() {
 
 #[test]
 fn test_jsonrpc_request() {
-    let request = JsonrpcRequest {
+    let request = JsonRpcRequest {
         id: RequestId::String("test-id".to_string()),
         jsonrpc: "2.0".to_string(),
         method: "test-method".to_string(),
@@ -704,10 +704,10 @@ fn test_jsonrpc_request() {
 
 #[test]
 fn test_jsonrpc_response() {
-    let response = JsonrpcResponse {
+    let response = JsonRpcResponse {
         id: RequestId::String("test-id".to_string()),
         jsonrpc: "2.0".to_string(),
-        result: Result {
+        result: McpResult {
             meta: Default::default(),
         },
     };
@@ -717,8 +717,8 @@ fn test_jsonrpc_response() {
 
 #[test]
 fn test_jsonrpc_error() {
-    let error = JsonrpcError {
-        error: JsonrpcErrorError {
+    let error = JsonRpcError {
+        error: Error {
             code: 123,
             data: Some(serde_json::Value::String("test-data".to_string())),
             message: "Test error".to_string(),
@@ -783,7 +783,7 @@ fn test_prompt_message() {
 
 #[test]
 fn test_jsonrpc_notification() {
-    let notification = JsonrpcNotification {
+    let notification = JsonRpcNotification {
         jsonrpc: "2.0".to_string(),
         method: "test-method".to_string(),
         params: Default::default(),
@@ -827,7 +827,7 @@ fn test_model_preferences() {
 
 #[test]
 fn test_result() {
-    let result = Result {
+    let result = McpResult {
         meta: {
             let mut map = serde_json::Map::new();
             map.insert(
